@@ -5,6 +5,7 @@ from playsound import playsound
 import time
 import os
 import mutagen
+import pytest
 
 artist_title = "foo - bar"
 music_dir = "/tmp"
