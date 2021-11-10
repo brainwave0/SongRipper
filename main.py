@@ -4,11 +4,9 @@ import os.path as osp
 import subprocess as spc
 import sys
 import re
-import lib
-
 
 def record(artist_title: str, music_dir: str):
-    run([
+    spc.run([
         "rec", "-C", "-4.0",
         song_path(artist_title, music_dir), "silence", "1", "3t", "0%", "1",
         "3t", "0%"
@@ -18,7 +16,7 @@ def record(artist_title: str, music_dir: str):
 
 def song_path(artist_title: str, music_dir: str) -> str:
     return osp.join(music_dir,
-                    "{}.mp3".format(lib.safe_filename(artist_title)))
+                    "{}.mp3".format(safe_filename(artist_title)))
 
 
 def cleanup(song: str, music_dir: str):

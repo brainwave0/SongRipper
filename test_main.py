@@ -4,7 +4,7 @@ import threading
 from playsound import playsound
 import time
 import os
-import mutagen
+import mutagen.mp3
 import pytest
 
 artist_title = "foo - bar"
@@ -17,13 +17,13 @@ def recording():
     global artist_title
     global music_dir
     threading.Thread(target=record, args=(artist_title, music_dir)).start()
-    playsound(path)
+    playsound("sine_tone.wav")
     time.sleep(4)  # wait for silence to be detected, and for the file to be written
     yield path
     os.remove(path)
 
 def test_record(recording):
-    assert mutagen.mp3.MP3(recording).info.length[2] == 1  # assert that a one-second MP3 file was written
+    assert mutagen.mp3.MP3(recording).info.length - 4 < 0.01  # assert that a four-second MP3 file was written
 
 def test_song_path():
     assert song_path(artist_title, "/home/me/my music") == "/home/me/my music/foo - bar.mp3"
