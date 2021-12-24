@@ -4,6 +4,8 @@ import os.path as osp
 import subprocess as spc
 import sys
 import re
+import io
+import os
 
 def record(artist_title: str, music_dir: str):
     spc.run([
@@ -13,6 +15,9 @@ def record(artist_title: str, music_dir: str):
     ],
         check=True)
 
+def safe_filename(name: str) -> str:
+    return "".join(c for c in name
+                   if c.isalnum() or c in " ._-+*()&'!#").rstrip()
 
 def song_path(artist_title: str, music_dir: str) -> str:
     return osp.join(music_dir,

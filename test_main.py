@@ -20,7 +20,10 @@ def recording():
     playsound("sine_tone.wav")
     time.sleep(4)  # wait for silence to be detected, and for the file to be written
     yield path
-    os.remove(path)
+    try:
+        os.remove(path)
+    except FileNotFoundError:
+        pass
 
 def test_record(recording):
     assert mutagen.mp3.MP3(recording).info.length - 4 < 0.01  # assert that a four-second MP3 file was written
@@ -30,16 +33,5 @@ def test_song_path():
 
 def test_cleanup(recording):
     cleanup(artist_title, music_dir)
-    assert not os.isfile(recording)
+    assert not os.path.isfile(recording)
 
-def test_try_record():
-    global artist_title
-    global music_dir
-    def ctrlc():
-        raise KeyboardInterrupt
-    def nop():
-        pass
-    threading.Timer(
-        1, ctrlc
-    ).start()
-    try_record(artist_title, music_dir, nop)
