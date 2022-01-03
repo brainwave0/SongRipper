@@ -79,6 +79,7 @@ def handle_keyboard_interrupt(artist_title: str, music_dir: str,
     for c in response:
         if c == "1":
             artist_title = pop_file_line(lib_file)
+            lib.remove(artist_title)
         elif c == "2":
             queue_file.write(artist_title + '\n')
         elif c == "3":
