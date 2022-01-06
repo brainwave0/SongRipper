@@ -188,7 +188,7 @@ def main(music_dir: str):
                 break
             song = to_artist_title(line)
             if song not in lib and is_song(line):
-                web_search('"{}"'.format(song))
+                web_search('{}'.format(song))
                 try:
                     record(song_path(song, music_dir))
                     lib.add(song)
